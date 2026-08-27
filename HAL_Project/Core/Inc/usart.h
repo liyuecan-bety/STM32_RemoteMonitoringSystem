@@ -35,13 +35,12 @@ extern "C" {
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
-#define USART_REC_LEN   200                     /* 定义最大接收字节数 200 */
-#define RXBUFFERSIZE    1                       /* 缓存大小即每次只能读取一个字节*/
+#define USART_REC_LEN   200                     /* Receive buffer length: 200 bytes */
+#define RXBUFFERSIZE    1                       /* Receive buffer size: 1 byte per interrupt */
 
-extern uint8_t  g_usart_rx_buf[USART_REC_LEN];  /* 接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 */
-extern uint16_t g_usart_rx_sta;                 /* 接收状态标记 */
-extern uint8_t g_rx_buffer[RXBUFFERSIZE];       /* HAL库USART接收Buffer */
-
+extern uint8_t  g_usart_rx_buf[USART_REC_LEN];  /* RX buffer, max USART_REC_LEN bytes, last byte is terminator */
+extern uint16_t g_usart_rx_sta;                 /* RX status register */
+extern uint8_t g_rx_buffer[RXBUFFERSIZE];       /* HAL USART RX buffer */
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);

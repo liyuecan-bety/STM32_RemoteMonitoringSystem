@@ -21,9 +21,9 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-uint8_t  g_usart_rx_buf[USART_REC_LEN];  /* ½ÓÊÕ»º³å,×î´óUSART_REC_LEN¸ö×Ö½Ú.Ä©×Ö½ÚÎª»»ĞĞ·û */
-uint16_t g_usart_rx_sta;                 /* ½ÓÊÕ×´Ì¬±ê¼Ç */
-uint8_t g_rx_buffer[RXBUFFERSIZE];       /* HAL¿âUSART½ÓÊÕBuffer */
+uint8_t  g_usart_rx_buf[USART_REC_LEN];  /* ï¿½ï¿½ï¿½Õ»ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½USART_REC_LENï¿½ï¿½ï¿½Ö½ï¿½.Ä©ï¿½Ö½ï¿½Îªï¿½ï¿½ï¿½Ğ·ï¿½ */
+uint16_t g_usart_rx_sta;                 /* ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ */
+uint8_t g_rx_buffer[RXBUFFERSIZE];       /* HALï¿½ï¿½USARTï¿½ï¿½ï¿½ï¿½Buffer */
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -117,6 +117,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+
+//å®šå‘ä¸²å£
 int fputc(int ch,FILE *f)
 {
 	HAL_UART_Transmit(&huart1,(uint8_t*)&ch,1,0xffff);

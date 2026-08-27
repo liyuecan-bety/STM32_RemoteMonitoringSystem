@@ -20,10 +20,13 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
+#include "fsmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "led\bsp_led.h"
+#include "lcd\lcd.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,7 +69,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-		uint8_t len;
+	uint8_t len;
     uint16_t times = 0;
   /* USER CODE END 1 */
 
@@ -89,8 +92,10 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  MX_FSMC_Init();
+	lcd_init();
   /* USER CODE BEGIN 2 */
-	HAL_UART_Receive_IT(&huart1,(uint8_t *)&g_rx_buffer,RXBUFFERSIZE);
+	HAL_UART_Receive_IT(&huart1,(uint8_t *)&g_usart_rx_buf,RXBUFFERSIZE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -98,32 +103,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-			if (g_usart_rx_sta & 0x8000)         /* Receive 0x0d*/
-        {
-            len = g_usart_rx_sta & 0x3fff;  /* 得到此次接收到的数据长度 */
-            printf("\r\n您发送的消息为:\r\n");
 
-            HAL_UART_Transmit(&huart1,(uint8_t*)g_usart_rx_buf,len,1000);    /* 发送接收到的数据 */
-            while(__HAL_UART_GET_FLAG(&huart1,UART_FLAG_TC)!=SET);           /* 等待发送结束 */
-            printf("\r\n\r\n");             /* 插入换行 */
-            g_usart_rx_sta = 0;
-        }
-        else
-        {
-            times++;
-
-            if (times % 5000 == 0)
-            {
-                printf("\r\n正点原子 STM32开发板 串口实验\r\n");
-                printf("正点原子@ALIENTEK\r\n\r\n\r\n");
-            }
-
-            if (times % 200 == 0) printf("请输入数据,以回车键结束\r\n");
-
-            if (times % 30  == 0) LED0_TOGGLE;/* 闪烁LED,提示系统正在运行. */
-
-            HAL_Delay(10);
-        }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

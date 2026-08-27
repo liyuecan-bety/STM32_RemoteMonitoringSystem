@@ -1,5 +1,5 @@
 hal_project\bsp_led.o: ..\Core\Src\bsp\led\bsp_led.c
-hal_project\bsp_led.o: ..\Core\Inc\bsp\led\bsp_led.h
+hal_project\bsp_led.o: ../Core/Inc/bsp/led\bsp_led.h
 hal_project\bsp_led.o: ../Core/Inc/main.h
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 hal_project\bsp_led.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -27,6 +27,8 @@ hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
+hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 hal_project\bsp_led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h

@@ -26,10 +26,15 @@ hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
 hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
+hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 hal_project\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 hal_project\main.o: ../Core/Inc/usart.h
 hal_project\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 hal_project\main.o: ../Core/Inc/gpio.h
-hal_project\main.o: ..\Core\Inc\bsp\led\bsp_led.h
+hal_project\main.o: ../Core/Inc/fsmc.h
+hal_project\main.o: ../Core/Inc/bsp/led\bsp_led.h
+hal_project\main.o: ../Core/Inc/bsp/lcd\lcd.h
+hal_project\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
