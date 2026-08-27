@@ -125,22 +125,24 @@ int fputc(int ch,FILE *f)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    if(huart->Instance == USART1)             /* 如果是串口1 */
+    if(huart->Instance == USART1)             /*if is USART1*/
     {
-        if((g_usart_rx_sta & 0x8000) == 0)      /* 接收未完成 */
+				//0x0d->Receive \r
+				//0x0a->Receive \n
+        if((g_usart_rx_sta & 0x8000) == 0)      /* Receive Error  */
         {
-            if(g_usart_rx_sta & 0x4000)         /* 接收到了0x0d */
+            if(g_usart_rx_sta & 0x4000)         /* have Received 0x0d */
             {
-                if(g_rx_buffer[0] != 0x0a) 
+                if(g_rx_buffer[0] != 0x0a) 			/* if not receive \n */
                 {
-                    g_usart_rx_sta = 0;         /* 接收错误,重新开始 */
+                    g_usart_rx_sta = 0;         /* Receive Error , restart */
                 }
-                else 
+                else 														/*if received \n */
                 {
-                    g_usart_rx_sta |= 0x8000;   /* 接收完成了 */
+                    g_usart_rx_sta |= 0x8000;   /* Finished  */
                 }
             }
-            else                                /* 还没收到0X0D */
+            else                                /* not receive 0X0D */
             {
                 if(g_rx_buffer[0] == 0x0d)
                 {
@@ -149,16 +151,19 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                 else
                 {
                     g_usart_rx_buf[g_usart_rx_sta & 0X3FFF] = g_rx_buffer[0] ;
+										//g_usart_rx_sta & 0X3FFF is to get g_usart_rx_sta's 0-13bit as indexes
                     g_usart_rx_sta++;
                     if(g_usart_rx_sta > (USART_REC_LEN - 1))
                     {
-                        g_usart_rx_sta = 0;     /* 接收数据错误,重新开始接收 */
+                        g_usart_rx_sta = 0;     /* receive error ,restart */
                     }
                 }
             }
         }
         
         HAL_UART_Receive_IT(&huart1, (uint8_t *)g_rx_buffer, RXBUFFERSIZE);
+				/*everytime huart1 only receive RXBUFFERSIZE byte to g_rx_buffer;
+					everytime 1 byte to g_rx_buffer[0] 		*/
     }
 }
 /* USER CODE END 1 */

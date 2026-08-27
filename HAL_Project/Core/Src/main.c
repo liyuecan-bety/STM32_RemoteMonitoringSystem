@@ -98,7 +98,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-			if (g_usart_rx_sta & 0x8000)         /* 接收到了数据? */
+			if (g_usart_rx_sta & 0x8000)         /* Receive 0x0d*/
         {
             len = g_usart_rx_sta & 0x3fff;  /* 得到此次接收到的数据长度 */
             printf("\r\n您发送的消息为:\r\n");
