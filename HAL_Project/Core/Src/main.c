@@ -27,6 +27,7 @@
 #include "led\bsp_led.h"
 #include "lcd\lcd.h"
 #include <stdio.h>
+#include "key\bsp_key.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,8 +70,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint8_t len;
-    uint16_t times = 0;
+	uint8_t x = 0;
+  uint8_t lcd_id[12];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -96,6 +97,7 @@ int main(void)
 	lcd_init();
   /* USER CODE BEGIN 2 */
 	HAL_UART_Receive_IT(&huart1,(uint8_t *)&g_usart_rx_buf,RXBUFFERSIZE);
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,7 +105,69 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+		g_point_color = RED;
+    sprintf((char *)lcd_id, "LCD ID:%04X", lcddev.id);  /* 将LCD ID打印到lcd_id数组 */
+        switch (x)
+        {
+        case 0:
+            lcd_clear(WHITE);
+            break;
 
+        case 1:
+            lcd_clear(BLACK);
+            break;
+
+        case 2:
+            lcd_clear(BLUE);
+            break;
+
+        case 3:
+            lcd_clear(RED);
+            break;
+
+        case 4:
+            lcd_clear(MAGENTA);
+            break;
+
+        case 5:
+            lcd_clear(GREEN);
+            break;
+
+        case 6:
+            lcd_clear(CYAN);
+            break;
+
+        case 7:
+            lcd_clear(YELLOW);
+            break;
+
+        case 8:
+            lcd_clear(BRRED);
+            break;
+
+        case 9:
+            lcd_clear(GRAY);
+            break;
+
+        case 10:
+            lcd_clear(LGRAY);
+            break;
+
+        case 11:
+            lcd_clear(BROWN);
+            break;
+				}
+        lcd_show_string(10, 40, 240, 32, 32, "STM32", RED);
+        lcd_show_string(10, 80, 240, 24, 24, "TFTLCD TEST", RED);
+        lcd_show_string(10, 110, 240, 16, 16, "ATOM@ALIENTEK", RED);
+        lcd_show_string(10, 130, 240, 16, 16, (char *)lcd_id, RED); /* 显示LCD ID */
+        x++;
+
+        if (x == 12)
+            x = 0;
+        LED0_TOGGLE; /*红灯闪烁*/
+        HAL_Delay(1000);
+		
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
