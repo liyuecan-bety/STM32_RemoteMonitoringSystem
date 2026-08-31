@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
@@ -74,9 +73,9 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	//every channel sum、average、voltage
-	uint32_t ch_sum[ADC_CHANNEL_COUNT] = {0};
-	uint32_t ch_avg[ADC_CHANNEL_COUNT] = {0};
-	float ch_voltage[ADC_CHANNEL_COUNT] = {0};
+	uint32_t ch_sum;
+	uint32_t ch_avg;
+	float ch_voltage;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -97,40 +96,21 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_FSMC_Init();
-  MX_ADC1_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 	//LCD Initialize
 	lcd_init();							
 	
 	//LCD display title
 		lcd_show_string(30,  50, 200, 16, 16, "STM32", RED);
-    lcd_show_string(30,  70, 200, 16, 16, "ADC 6CH DMA TEST", RED);
-    lcd_show_string(30,  90, 200, 16, 16, "ATOM@ALIENTEK", RED);
+    lcd_show_string(30,  70, 200, 16, 16, "ADC TEST", RED);
 
     lcd_show_string(30, 110, 200, 12, 12, "ADC1_CH0_VAL:", BLUE);
     lcd_show_string(30, 122, 200, 12, 12, "ADC1_CH0_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-    
-    lcd_show_string(30, 140, 200, 12, 12, "ADC1_CH1_VAL:", BLUE);
-    lcd_show_string(30, 152, 200, 12, 12, "ADC1_CH1_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-
-    lcd_show_string(30, 170, 200, 12, 12, "ADC1_CH2_VAL:", BLUE);
-    lcd_show_string(30, 182, 200, 12, 12, "ADC1_CH2_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-
-    lcd_show_string(30, 200, 200, 12, 12, "ADC1_CH3_VAL:", BLUE);
-    lcd_show_string(30, 212, 200, 12, 12, "ADC1_CH3_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-
-    lcd_show_string(30, 230, 200, 12, 12, "ADC1_CH4_VAL:", BLUE);
-    lcd_show_string(30, 242, 200, 12, 12, "ADC1_CH4_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-
-    lcd_show_string(30, 260, 200, 12, 12, "ADC1_CH5_VAL:", BLUE);
-    lcd_show_string(30, 272, 200, 12, 12, "ADC1_CH5_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-	
-	
 	//Start ADC + DMA CIRCULAR MODE
-	HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc_dma_buffer,ADC_SAMPLE_COUNT * ADC_CHANNEL_COUNT);
+	
 	
   /* USER CODE END 2 */
 
@@ -138,40 +118,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */		
-		// ========== 1. 先清零累加器 ==========
-    for (int ch = 0; ch < ADC_CHANNEL_COUNT; ch++) {
-        ch_sum[ch] = 0;  // ✅ 关键：每次循环必须清零
-    }
-		
-		//get every channel's sample value 
-		for(int sample = 0;sample < ADC_SAMPLE_COUNT;sample++){
-			for(int ch = 0;ch < ADC_CHANNEL_COUNT;ch ++){
-				ch_sum[ch] += adc_dma_buffer[sample][ch];
+		uint32_t value = 0;
+    /* USER CODE END WHILE */
+		for(int i = 0;i < 10;i++){
+			//single mode
+			HAL_ADC_Start(&hadc3);
+			if(HAL_ADC_PollForConversion(&hadc3,10) == HAL_OK){
+				value = HAL_ADC_GetValue(&hadc3);
 			}
+			ch_sum += value;
+			HAL_Delay(5);
 		}
-		
-		//get every channel's average and voltage : sum / ADC_SAMPLE_COUNT
-		for (int ch = 0; ch < ADC_CHANNEL_COUNT; ch++) {
-        ch_avg[ch] = ch_sum[ch] / ADC_SAMPLE_COUNT;  // ✅ 除以采样次数 10
-        ch_voltage[ch] = (float)ch_avg[ch] * 3.3f / 4096.0f;
-    }
-		
-		//Show ADC's value
-		// ========== 4. 显示 ADC 值和电压 ==========
-    for (int ch = 0; ch < ADC_CHANNEL_COUNT; ch++) {
-        // 显示 ADC 原始值
-        lcd_show_xnum(108, 110 + (ch * 30), ch_avg[ch], 4, 12, 0, BLUE);
-        
-        // 显示电压值
-        uint16_t vol_int = (uint16_t)ch_voltage[ch];           // 整数部分
-        uint16_t vol_dec = (uint16_t)((ch_voltage[ch] - vol_int) * 1000);  // 小数部分（mV）
-        
-        lcd_show_xnum(108, 122 + (ch * 30), vol_int, 1, 12, 0, BLUE);
-        lcd_show_xnum(120, 122 + (ch * 30), vol_dec, 3, 12, 0x80, BLUE);
-    }
-			
-		
+		ch_avg = ch_sum / 10;
+		ch_voltage = ch_avg / 40;
+		if(ch_voltage > 100)
+			ch_voltage = 100;
+		lcd_show_xnum(108,110,ch_avg,4,12,0,BLUE);
+		lcd_show_xnum(108,122,ch_voltage,3,12,0,BLUE);
 		LED0_TOGGLE;
 		HAL_Delay(500);
     /* USER CODE BEGIN 3 */

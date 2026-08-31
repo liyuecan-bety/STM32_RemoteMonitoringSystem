@@ -3,7 +3,6 @@
 "hal_project\main.o"
 "hal_project\gpio.o"
 "hal_project\adc.o"
-"hal_project\dma.o"
 "hal_project\fsmc.o"
 "hal_project\usart.o"
 "hal_project\stm32f4xx_it.o"
