@@ -38,8 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_SAMPLE_COUNT 			10			//sample number
-#define ADC_CHANNEL_COUNT 		6				//channel number
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,7 +49,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint16_t adc_dma_buffer [ADC_SAMPLE_COUNT][ADC_CHANNEL_COUNT];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,9 +72,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	//every channel sum、average、voltage
-	uint32_t ch_sum;
-	uint32_t ch_avg;
-	float ch_voltage;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -107,36 +104,38 @@ int main(void)
 		lcd_show_string(30,  50, 200, 16, 16, "STM32", RED);
     lcd_show_string(30,  70, 200, 16, 16, "ADC TEST", RED);
 
-    lcd_show_string(30, 110, 200, 12, 12, "ADC1_CH0_VAL:", BLUE);
-    lcd_show_string(30, 122, 200, 12, 12, "ADC1_CH0_VOL:0.000V", BLUE); /* 先在固定位置显示小数点 */
-	//Start ADC + DMA CIRCULAR MODE
-	
-	
+    lcd_show_string(30, 110, 200, 12, 12, "ADC1_CH0_VAL:", BLUE);	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		uint32_t value = 0;
-    /* USER CODE END WHILE */
-		for(int i = 0;i < 10;i++){
-			//single mode
+		uint32_t adc_sum = 0;
+		uint32_t adc_avg_value;
+		uint32_t adc_light_value;
+		uint8_t times = 10;
+		
+		for(int i = 0;i < times;i++)
+		{
 			HAL_ADC_Start(&hadc3);
-			if(HAL_ADC_PollForConversion(&hadc3,10) == HAL_OK){
-				value = HAL_ADC_GetValue(&hadc3);
+			if(HAL_ADC_PollForConversion(&hadc3,100) == HAL_OK)
+			{
+				adc_sum += HAL_ADC_GetValue(&hadc3);
 			}
-			ch_sum += value;
 			HAL_Delay(5);
 		}
-		ch_avg = ch_sum / 10;
-		ch_voltage = ch_avg / 40;
-		if(ch_voltage > 100)
-			ch_voltage = 100;
-		lcd_show_xnum(108,110,ch_avg,4,12,0,BLUE);
-		lcd_show_xnum(108,122,ch_voltage,3,12,0,BLUE);
+		adc_avg_value = (adc_sum / 10) / 40;
+		
+		if (adc_avg_value > 100)adc_avg_value = 100;
+		
+		adc_light_value = 100 - adc_avg_value;
+		lcd_show_xnum(108, 110, adc_light_value, 3, 12, 0, BLUE);  /* 显示ADC的值 */
+		
 		LED0_TOGGLE;
 		HAL_Delay(500);
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -162,7 +161,12 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 168;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -172,12 +176,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
     Error_Handler();
   }

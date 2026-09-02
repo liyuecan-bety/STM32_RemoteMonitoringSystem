@@ -545,6 +545,21 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\bsp\lcd\lcd.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\bsp\iic\bsp_iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\bsp\delay\bsp_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\bsp\dht11\bsp_dht11.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
