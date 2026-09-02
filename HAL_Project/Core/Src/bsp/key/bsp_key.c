@@ -1,5 +1,5 @@
 #include "key\bsp_key.h"
-
+#include "delay\bsp_delay.h"
 
 
 
@@ -26,7 +26,7 @@ uint8_t key_scan(uint8_t mode)
 
     if (key_up && (KEY0 == 0 || KEY1 == 0 || KEY2 == 0 || KEY_WKUP == 1))  /* 按键松开标志为1, 且有任意一个按键按下了 */
     {
-        HAL_Delay(10);           /* 去抖动 */
+        Delay_ms(10);           /* 去抖动 */
         key_up = 0;
 
         if (KEY0 == 0)  keyval = KEY0_PRES;

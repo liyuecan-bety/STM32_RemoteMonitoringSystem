@@ -13,6 +13,7 @@
 "hal_project\bsp_iic.o"
 "hal_project\bsp_delay.o"
 "hal_project\bsp_dht11.o"
+"hal_project\bsp_24cxx.o"
 "hal_project\stm32f4xx_hal_adc.o"
 "hal_project\stm32f4xx_hal_adc_ex.o"
 "hal_project\stm32f4xx_hal_rcc.o"

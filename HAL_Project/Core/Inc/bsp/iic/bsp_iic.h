@@ -21,14 +21,13 @@
 																			}while(0)
 
 #define IIC_SDA(x)										do{x ? \
-																				 HAL_GPIO_WritePin(IIC_SCL_GPIO_PORT,IIC_SDA_GPIO_PIN,GPIO_PIN_SET):\
-																				 HAL_GPIO_WritePin(IIC_SCL_GPIO_PORT,IIC_SDA_GPIO_PIN,GPIO_PIN_RESET);\
+																				 HAL_GPIO_WritePin(IIC_SDA_GPIO_PORT,IIC_SDA_GPIO_PIN,GPIO_PIN_SET):\
+																				 HAL_GPIO_WritePin(IIC_SDA_GPIO_PORT,IIC_SDA_GPIO_PIN,GPIO_PIN_RESET);\
 																			}while(0)
 
-#define IIC_READ_SDA									HAL_GPIO_ReadPin(IIC_SCL_GPIO_PORT,IIC_SCL_GPIO_PIN)																	
+#define IIC_READ_SDA									HAL_GPIO_ReadPin(IIC_SDA_GPIO_PORT,IIC_SDA_GPIO_PIN)																	
 
 void iic_init(void);
-static void iic_delay(void);
 void iic_start(void);
 void iic_stop(void);
 uint8_t iic_wait_ack(void);

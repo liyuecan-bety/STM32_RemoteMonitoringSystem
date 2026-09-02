@@ -560,6 +560,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\bsp\dht11\bsp_dht11.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_24cxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\bsp\24cxx\bsp_24cxx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -82,3 +82,4 @@ static uint8_t dht11_read_byte(void)
 	}	
 	return data;
 }
+

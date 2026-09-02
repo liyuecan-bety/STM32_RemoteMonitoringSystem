@@ -25,10 +25,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "led\bsp_led.h"
 #include "lcd\lcd.h"
-#include <stdio.h>
 #include "key\bsp_key.h"
+#include "delay\bsp_delay.h"
+#include "24cxx\bsp_24cxx.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,7 +63,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+const uint8_t g_text_buf[] = {"STM32 IIC TEST"};
 
+#define TEXT_SIZE   sizeof(g_text_buf)          /* TEXT字符串长度 */
 /* USER CODE END 0 */
 
 /**
@@ -72,7 +77,9 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	//every channel sum、average、voltage
-
+	uint8_t key;
+  uint16_t i = 0;
+  uint8_t datatemp[TEXT_SIZE];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -95,49 +102,64 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_FSMC_Init();
-  MX_ADC3_Init();
+	Delay_Init();
   /* USER CODE BEGIN 2 */
 	//LCD Initialize
-	lcd_init();							
-	
+	lcd_init();		
+	//Delay_Init();
+	at24cxx_init();
 	//LCD display title
-		lcd_show_string(30,  50, 200, 16, 16, "STM32", RED);
-    lcd_show_string(30,  70, 200, 16, 16, "ADC TEST", RED);
 
-    lcd_show_string(30, 110, 200, 12, 12, "ADC1_CH0_VAL:", BLUE);	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-		uint32_t adc_sum = 0;
-		uint32_t adc_avg_value;
-		uint32_t adc_light_value;
-		uint8_t times = 10;
-		
-		for(int i = 0;i < times;i++)
-		{
-			HAL_ADC_Start(&hadc3);
-			if(HAL_ADC_PollForConversion(&hadc3,100) == HAL_OK)
-			{
-				adc_sum += HAL_ADC_GetValue(&hadc3);
-			}
-			HAL_Delay(5);
-		}
-		adc_avg_value = (adc_sum / 10) / 40;
-		
-		if (adc_avg_value > 100)adc_avg_value = 100;
-		
-		adc_light_value = 100 - adc_avg_value;
-		lcd_show_xnum(108, 110, adc_light_value, 3, 12, 0, BLUE);  /* 显示ADC的值 */
-		
-		LED0_TOGGLE;
-		HAL_Delay(500);
-    /* USER CODE END WHILE */
+		lcd_show_string(30, 50, 200, 16, 16, "STM32", RED);
+    lcd_show_string(30, 70, 200, 16, 16, "IIC TEST", RED);
+    lcd_show_string(30, 90, 200, 16, 16, "ATOM@ALIENTEK", RED);
+    lcd_show_string(30, 110, 200, 16, 16, "KEY1:Write  KEY0:Read", RED);    /* 显示提示信息 */
 
-    /* USER CODE BEGIN 3 */
-  }
+    while (at24cxx_check()) /* 检测不到24c02 */
+    {
+        lcd_show_string(30, 130, 200, 16, 16, "24C02 Check Failed!", RED);
+        Delay_ms(500);
+        lcd_show_string(30, 130, 200, 16, 16, "Please Check!      ", RED);
+        Delay_ms(500);
+        LED0_TOGGLE;      /* 红灯闪烁 */
+    }
+
+    lcd_show_string(30, 130, 200, 16, 16, "24C02 Ready!", RED);
+
+    while (1)
+    {
+        key = key_scan(0);
+
+        if (HAL_GPIO_ReadPin(GPIOE,GPIO_PIN_3) == 0)   /* KEY1按下,写入24C02 */
+        {
+            lcd_fill(0, 150, 239, 319, WHITE);  /* 清除半屏 */
+            lcd_show_string(30, 150, 200, 16, 16, "Start Write 24C02....", BLUE);
+            at24cxx_write(0, (uint8_t *)g_text_buf, TEXT_SIZE);
+            lcd_show_string(30, 150, 200, 16, 16, "24C02 Write Finished!", BLUE);   /* 提示传送完成 */
+        }
+
+        if (HAL_GPIO_ReadPin(GPIOE,GPIO_PIN_4) == 0)   /* KEY0按下,读取字符串并显示 */
+        {
+            lcd_show_string(30, 150, 200, 16, 16, "Start Read 24C02.... ", BLUE);
+            at24cxx_read(0, datatemp, TEXT_SIZE);
+            lcd_show_string(30, 150, 200, 16, 16, "The Data Readed Is:  ", BLUE);   /* 提示传送完成 */
+            lcd_show_string(30, 170, 200, 16, 16, (char *)datatemp, BLUE);          /* 显示读到的字符串 */
+        }
+
+        i++;
+
+        if (i == 20)
+        {
+            LED0_TOGGLE;  /* 红灯闪烁 */
+            i = 0;
+        }
+
+        Delay_ms(10);
+    }
   /* USER CODE END 3 */
 }
 

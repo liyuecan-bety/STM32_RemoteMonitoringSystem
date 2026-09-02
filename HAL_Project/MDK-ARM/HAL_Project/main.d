@@ -43,3 +43,5 @@ hal_project\main.o: ../Core/Inc/bsp/led\bsp_led.h
 hal_project\main.o: ../Core/Inc/bsp/lcd\lcd.h
 hal_project\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 hal_project\main.o: ../Core/Inc/bsp/key\bsp_key.h
+hal_project\main.o: ../Core/Inc/bsp/delay\bsp_delay.h
+hal_project\main.o: ../Core/Inc/bsp/24cxx\bsp_24cxx.h

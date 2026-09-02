@@ -35,3 +35,4 @@ hal_project\bsp_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 hal_project\bsp_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 hal_project\bsp_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 hal_project\bsp_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+hal_project\bsp_key.o: ../Core/Inc/bsp/delay\bsp_delay.h
