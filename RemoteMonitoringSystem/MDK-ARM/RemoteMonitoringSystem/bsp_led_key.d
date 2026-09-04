@@ -1,5 +1,5 @@
 remotemonitoringsystem\bsp_led_key.o: ..\Core\Src\bsp\LedKey\bsp_led_key.c
-remotemonitoringsystem\bsp_led_key.o: ..\Core\Inc\bsp\LedKey\bsp_led_key.h
+remotemonitoringsystem\bsp_led_key.o: ../Core/Inc/bsp/LedKey\bsp_led_key.h
 remotemonitoringsystem\bsp_led_key.o: ../Core/Inc/main.h
 remotemonitoringsystem\bsp_led_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 remotemonitoringsystem\bsp_led_key.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -29,3 +29,4 @@ remotemonitoringsystem\bsp_led_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f
 remotemonitoringsystem\bsp_led_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 remotemonitoringsystem\bsp_led_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 remotemonitoringsystem\bsp_led_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+remotemonitoringsystem\bsp_led_key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h

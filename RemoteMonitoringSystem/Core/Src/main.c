@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -65,7 +66,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint8_t key;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -86,6 +86,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -95,26 +96,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		
+
     /* USER CODE BEGIN 3 */
-		key = key_scan(1);
-		switch (key)
-		{
-			case 1:
-				LED0(0);
-				break;
-			case 2:
-				LED0(1);
-				break;
-			case 3:
-				LED1(0);
-				break;
-			case 4:
-				LED1(1);
-				break;
-			default:
-				break;
-		}
+		
   }
   /* USER CODE END 3 */
 }

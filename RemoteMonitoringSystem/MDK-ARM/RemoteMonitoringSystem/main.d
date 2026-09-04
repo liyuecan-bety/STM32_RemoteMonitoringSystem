@@ -28,5 +28,7 @@ remotemonitoringsystem\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal
 remotemonitoringsystem\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 remotemonitoringsystem\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 remotemonitoringsystem\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+remotemonitoringsystem\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+remotemonitoringsystem\main.o: ../Core/Inc/usart.h
 remotemonitoringsystem\main.o: ../Core/Inc/gpio.h
-remotemonitoringsystem\main.o: ..\Core\Inc\bsp\LedKey\bsp_led_key.h
+remotemonitoringsystem\main.o: ../Core/Inc/bsp/LedKey\bsp_led_key.h
