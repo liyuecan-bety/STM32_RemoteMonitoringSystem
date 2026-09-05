@@ -32,3 +32,6 @@ remotemonitoringsystem\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal
 remotemonitoringsystem\main.o: ../Core/Inc/usart.h
 remotemonitoringsystem\main.o: ../Core/Inc/gpio.h
 remotemonitoringsystem\main.o: ../Core/Inc/bsp/LedKey\bsp_led_key.h
+remotemonitoringsystem\main.o: ../Core/Inc/bsp/usart\bsp_usart1.h
+remotemonitoringsystem\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+remotemonitoringsystem\main.o: ../Core/Inc/bsp/delay\bsp_delay.h

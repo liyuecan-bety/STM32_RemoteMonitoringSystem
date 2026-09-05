@@ -10,7 +10,7 @@ uint8_t g_rx_buffer[RXBUFFERSIZE];       /* HAL USART RX buffer */
 //重新定向printf
 int fputc(int ch,FILE *f)
 {
-	HAL_UART_Transmit(&huart1,(uint8_t*)&ch,1,0xffff);
+	HAL_UART_Transmit(&huart1,(uint8_t*)&ch,1,100);
 	return ch;
 }
 
@@ -24,7 +24,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		/*	The most significant bit represents the
 				success falg of the reception
 			*/
-		if(!(g_usart_rx_sta & 0x8000))	 
+		if((g_usart_rx_sta & 0x8000) == 0)	 
 		{
 			/*	The second higest position is the
 					acceptance of \r symbol
@@ -51,7 +51,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				{
 					g_usart_rx_buf[g_usart_rx_sta &0x3fff] = g_rx_buffer[0];
 					g_usart_rx_sta++;
-					if(g_usart_rx_sta > USART_REC_LEN - 1)
+					if(g_usart_rx_sta >= USART_REC_LEN - 1)
 						g_usart_rx_sta = 0;
 				}
 			}

@@ -24,6 +24,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "LedKey\bsp_led_key.h"
+#include "usart\bsp_usart1.h"
+#include "delay\bsp_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,7 +40,9 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+//uint8_t  g_usart_rx_buf[USART_REC_LEN];  /* RX buffer, max USART_REC_LEN bytes, last byte is terminator */
+//uint16_t g_usart_rx_sta;                 /* RX status register */
+//uint8_t g_rx_buffer[RXBUFFERSIZE];       /* HAL USART RX buffer */
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -66,6 +70,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	uint8_t len;
+	uint16_t times = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -87,8 +93,10 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+	
   /* USER CODE BEGIN 2 */
-
+	delay_init();
+	HAL_UART_Receive_IT(&huart1,(uint8_t *)g_rx_buffer,RXBUFFERSIZE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -96,9 +104,26 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
 		
+    /* USER CODE BEGIN 3 */
+		if(g_usart_rx_sta & 0x8000)
+		{
+			len = g_usart_rx_sta & 0x3fff;
+			printf("\r\n您发送的消息是：\r\n");
+			HAL_UART_Transmit(&huart1,(uint8_t*)g_usart_rx_buf,len,1000);
+			printf("\r\n\r\n");
+			g_usart_rx_sta = 0;
+		}
+		else
+		{
+			times++;
+			if(times % 5000 == 0)
+				printf("\r\n串口实验\r\n");
+			if(times % 200 == 0)	printf("请输入数据，以回车按键结束\r\n");
+			if(times % 30 == 0)	LED0_TOGGLE;
+			delay_ms(10);
+		
+		}
   }
   /* USER CODE END 3 */
 }

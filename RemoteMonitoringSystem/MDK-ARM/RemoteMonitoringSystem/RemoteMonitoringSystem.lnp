@@ -23,7 +23,7 @@
 "remotemonitoringsystem\stm32f4xx_hal.o"
 "remotemonitoringsystem\stm32f4xx_hal_exti.o"
 "remotemonitoringsystem\system_stm32f4xx.o"
---strict --scatter "RemoteMonitoringSystem\RemoteMonitoringSystem.sct"
+--library_type=microlib --strict --scatter "RemoteMonitoringSystem\RemoteMonitoringSystem.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "RemoteMonitoringSystem.map" -o RemoteMonitoringSystem\RemoteMonitoringSystem.axf
