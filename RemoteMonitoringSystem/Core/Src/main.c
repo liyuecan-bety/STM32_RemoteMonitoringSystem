@@ -18,14 +18,19 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
+#include "fsmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "LedKey\bsp_led_key.h"
 #include "usart\bsp_usart1.h"
 #include "delay\bsp_delay.h"
+#include "lcd\lcd.h"
+#include "dht11\bsp_dht11.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,8 +75,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint8_t len;
-	uint16_t times = 0;
+	uint8_t t = 0;
+  uint8_t temperature;
+  uint8_t humidity;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -92,11 +98,26 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
-	
+  MX_FSMC_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
+	lcd_init();
 	delay_init();
-	HAL_UART_Receive_IT(&huart1,(uint8_t *)g_rx_buffer,RXBUFFERSIZE);
+	lcd_show_string(30, 50, 200, 16, 16, "STM32", RED);
+  lcd_show_string(30, 70, 200, 16, 16, "DHT11 TEST", RED);
+  lcd_show_string(30, 90, 200, 16, 16, "ATOM@ALIENTEK", RED);
+  while (dht11_init())    /* DHT11ï¿½ï¿½Ê¼ï¿½ï¿½ */
+  {
+      lcd_show_string(30, 110, 200, 16, 16, "DHT11 Error", RED);
+      delay_ms(200);
+      lcd_fill(30, 110, 239, 130 + 16, WHITE);
+      delay_ms(200);
+  }
+	lcd_show_string(30, 110, 200, 16, 16, "DHT11 OK", RED);
+  lcd_show_string(30, 130, 200, 16, 16, "Temp:  C", BLUE);
+  lcd_show_string(30, 150, 200, 16, 16, "Humi:  %", BLUE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,26 +125,23 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		
+
     /* USER CODE BEGIN 3 */
-		if(g_usart_rx_sta & 0x8000)
-		{
-			len = g_usart_rx_sta & 0x3fff;
-			printf("\r\nÄú·¢ËÍµÄÏûÏ¢ÊÇ£º\r\n");
-			HAL_UART_Transmit(&huart1,(uint8_t*)g_usart_rx_buf,len,1000);
-			printf("\r\n\r\n");
-			g_usart_rx_sta = 0;
-		}
-		else
-		{
-			times++;
-			if(times % 5000 == 0)
-				printf("\r\n´®¿ÚÊµÑé\r\n");
-			if(times % 200 == 0)	printf("ÇëÊäÈëÊý¾Ý£¬ÒÔ»Ø³µ°´¼ü½áÊø\r\n");
-			if(times % 30 == 0)	LED0_TOGGLE;
-			delay_ms(10);
-		
-		}
+		if (t % 10 == 0)    /* Ã¿100msï¿½ï¿½È¡Ò»ï¿½ï¿½ */
+    {
+        dht11_read_data(&temperature, &humidity);             /* ï¿½ï¿½È¡ï¿½ï¿½Êªï¿½ï¿½Öµ */
+        lcd_show_num(30 + 40, 130, temperature, 2, 16, BLUE); /* ï¿½ï¿½Ê¾ï¿½Â¶ï¿½ */
+        lcd_show_num(30 + 40, 150, humidity, 2, 16, BLUE);    /* ï¿½ï¿½Ê¾Êªï¿½ï¿½ */
+    }
+
+    delay_ms(10);
+    t++;
+
+    if (t == 20)
+    {
+        t = 0;
+        LED0_TOGGLE;  /* LED0ï¿½ï¿½Ë¸ */
+    }
   }
   /* USER CODE END 3 */
 }

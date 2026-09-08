@@ -22,9 +22,14 @@ remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/I
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h
+remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h
+remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
+remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 remotemonitoringsystem\stm32f4xx_hal_dma_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
