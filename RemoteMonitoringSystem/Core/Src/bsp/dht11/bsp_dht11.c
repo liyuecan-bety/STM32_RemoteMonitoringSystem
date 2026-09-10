@@ -122,3 +122,5 @@ uint8_t dht11_init(void)
 	dht11_reset();
 	return dht11_check();
 }
+
+

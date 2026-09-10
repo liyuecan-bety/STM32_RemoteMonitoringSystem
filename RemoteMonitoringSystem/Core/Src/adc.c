@@ -155,10 +155,10 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 uint32_t adc3_get_result(uint32_t ch)
 {
     
-    HAL_ADC_Start(&hadc3);                            /* ¿ªÆôADC */
-    HAL_ADC_PollForConversion(&hadc3, 10);            /* ÂÖÑ¯×ª»» */
+    HAL_ADC_Start(&hadc3);                            /* ï¿½ï¿½ï¿½ï¿½ADC */
+    HAL_ADC_PollForConversion(&hadc3, 10);            /* ï¿½ï¿½Ñ¯×ªï¿½ï¿½ */
 
-    return (uint16_t)HAL_ADC_GetValue(&hadc3);        /* ·µ»Ø×î½üÒ»´ÎADC1¹æÔò×éµÄ×ª»»½á¹û */
+    return (uint16_t)HAL_ADC_GetValue(&hadc3);        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ADC1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ */
 }
 
 uint32_t adc3_get_result_average(uint32_t ch, uint8_t times)
@@ -166,12 +166,12 @@ uint32_t adc3_get_result_average(uint32_t ch, uint8_t times)
     uint32_t temp_val = 0;
     uint8_t t;
 
-    for (t = 0; t < times; t++)     /* »ñÈ¡times´ÎÊý¾Ý */
+    for (t = 0; t < times; t++)     /* ï¿½ï¿½È¡timesï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     {
         temp_val += adc3_get_result(ch);
         delay_ms(5);
     }
 
-    return temp_val / times;        /* ·µ»ØÆ½¾ùÖµ */
+    return temp_val / times;        /* ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ */
 }
 /* USER CODE END 1 */

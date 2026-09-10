@@ -77,6 +77,10 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	uint16_t adcx;
+	//uint8_t t = 0;
+	uint8_t temperature;
+	uint8_t humidity;
+	uint16_t cnt = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -108,6 +112,16 @@ int main(void)
   lcd_show_string(30, 70, 200, 16, 16, "DHT11 TEST", RED);
   lcd_show_string(30, 90, 200, 16, 16, "ATOM@ALIENTEK", RED);
   lcd_show_string(30, 110, 200, 16, 16, "LSENS_VAL:", BLUE);
+	while(dht11_init())
+	{
+		lcd_show_string(30, 130, 200, 16, 16, "DHT11 ERROR", RED);
+		delay_ms(200);
+		lcd_fill(30,130,239,130+16,WHITE);
+		delay_ms(200);
+	}
+	lcd_show_string(30, 130, 200, 16, 16, "DHT11 OK", RED);
+	lcd_show_string(30, 150, 200, 16, 16, "Temp:	C", BLUE);
+	lcd_show_string(30, 170, 200, 16, 16, "Humi:	%", BLUE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -117,10 +131,36 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		adcx = lsens_get_val();                                 /* 获取ADC值 */
-    lcd_show_xnum(30 + 10 * 8, 110, adcx, 3, 16, 0, BLUE);  /* 显示ADC的值 */
-    LED0_TOGGLE;                                          /* LED0闪烁,提示程序运行 */
-    delay_ms(250);
+		/* ---- 每 20ms 执行一次 ---- */
+    delay_ms(20);
+    cnt++;
+
+    /* ---- 每 200ms 读一次 DHT11（cnt 每 10 次 = 200ms）---- */
+    if (cnt % 10 == 0)
+    {
+        dht11_read_data(&temperature, &humidity);
+        lcd_show_num(30+40, 150, temperature, 2, 16, BLUE);
+        lcd_show_num(30+40, 170, humidity,    2, 16, BLUE);
+    }
+
+    /* ---- 每 200ms 读一次光敏并显示 ---- */
+    if (cnt % 10 == 0)
+    {
+        adcx = lsens_get_val();
+        lcd_show_xnum(30 + 10*8, 110, adcx, 3, 16, 0, BLUE);
+    }
+
+    /* ---- 每 200ms 翻转 LED0 ---- */
+    if (cnt % 30 == 0)
+    {
+        LED0_TOGGLE;    // 周期 = 10 × 20ms = 200ms → 2.5Hz，肉眼清晰可见
+    }
+
+    /* ---- 每 1s 翻转 LED1 ---- */
+    if (cnt % 50 == 0)
+    {
+        LED1_TOGGLE;    // 周期 = 50 × 20ms = 1000ms → 1Hz
+    }
   }
   /* USER CODE END 3 */
 }
