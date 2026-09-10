@@ -35,3 +35,4 @@ remotemonitoringsystem\adc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_f
 remotemonitoringsystem\adc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 remotemonitoringsystem\adc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 remotemonitoringsystem\adc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+remotemonitoringsystem\adc.o: ../Core/Inc/bsp/delay\bsp_delay.h

@@ -21,7 +21,7 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "delay\bsp_delay.h"
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc3;
@@ -105,7 +105,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     hdma_adc3.Init.MemInc = DMA_MINC_ENABLE;
     hdma_adc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_adc3.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_adc3.Init.Mode = DMA_NORMAL;
+    hdma_adc3.Init.Mode = DMA_CIRCULAR;
     hdma_adc3.Init.Priority = DMA_PRIORITY_LOW;
     hdma_adc3.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_adc3) != HAL_OK)
@@ -152,5 +152,26 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
+uint32_t adc3_get_result(uint32_t ch)
+{
+    
+    HAL_ADC_Start(&hadc3);                            /* 开启ADC */
+    HAL_ADC_PollForConversion(&hadc3, 10);            /* 轮询转换 */
 
+    return (uint16_t)HAL_ADC_GetValue(&hadc3);        /* 返回最近一次ADC1规则组的转换结果 */
+}
+
+uint32_t adc3_get_result_average(uint32_t ch, uint8_t times)
+{
+    uint32_t temp_val = 0;
+    uint8_t t;
+
+    for (t = 0; t < times; t++)     /* 获取times次数据 */
+    {
+        temp_val += adc3_get_result(ch);
+        delay_ms(5);
+    }
+
+    return temp_val / times;        /* 返回平均值 */
+}
 /* USER CODE END 1 */

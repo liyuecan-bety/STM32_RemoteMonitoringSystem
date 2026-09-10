@@ -660,6 +660,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\bsp\dht11\bsp_dht11.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_lsens.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\bsp\lsens\bsp_lsens.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -31,6 +31,7 @@
 #include "delay\bsp_delay.h"
 #include "lcd\lcd.h"
 #include "dht11\bsp_dht11.h"
+#include "lsens\bsp_lsens.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,9 +76,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint8_t t = 0;
-  uint8_t temperature;
-  uint8_t humidity;
+	uint16_t adcx;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -108,16 +107,7 @@ int main(void)
 	lcd_show_string(30, 50, 200, 16, 16, "STM32", RED);
   lcd_show_string(30, 70, 200, 16, 16, "DHT11 TEST", RED);
   lcd_show_string(30, 90, 200, 16, 16, "ATOM@ALIENTEK", RED);
-  while (dht11_init())    /* DHT11��ʼ�� */
-  {
-      lcd_show_string(30, 110, 200, 16, 16, "DHT11 Error", RED);
-      delay_ms(200);
-      lcd_fill(30, 110, 239, 130 + 16, WHITE);
-      delay_ms(200);
-  }
-	lcd_show_string(30, 110, 200, 16, 16, "DHT11 OK", RED);
-  lcd_show_string(30, 130, 200, 16, 16, "Temp:  C", BLUE);
-  lcd_show_string(30, 150, 200, 16, 16, "Humi:  %", BLUE);
+  lcd_show_string(30, 110, 200, 16, 16, "LSENS_VAL:", BLUE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -127,21 +117,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if (t % 10 == 0)    /* ÿ100ms��ȡһ�� */
-    {
-        dht11_read_data(&temperature, &humidity);             /* ��ȡ��ʪ��ֵ */
-        lcd_show_num(30 + 40, 130, temperature, 2, 16, BLUE); /* ��ʾ�¶� */
-        lcd_show_num(30 + 40, 150, humidity, 2, 16, BLUE);    /* ��ʾʪ�� */
-    }
-
-    delay_ms(10);
-    t++;
-
-    if (t == 20)
-    {
-        t = 0;
-        LED0_TOGGLE;  /* LED0��˸ */
-    }
+		adcx = lsens_get_val();                                 /* 获取ADC值 */
+    lcd_show_xnum(30 + 10 * 8, 110, adcx, 3, 16, 0, BLUE);  /* 显示ADC的值 */
+    LED0_TOGGLE;                                          /* LED0闪烁,提示程序运行 */
+    delay_ms(250);
   }
   /* USER CODE END 3 */
 }

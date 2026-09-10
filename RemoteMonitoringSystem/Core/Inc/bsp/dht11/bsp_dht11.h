@@ -16,5 +16,4 @@ uint8_t dht11_read_data(uint8_t *temp, uint8_t *humi);
 
 #endif
 
-
 																	

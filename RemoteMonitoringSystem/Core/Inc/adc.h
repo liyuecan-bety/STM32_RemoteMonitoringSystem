@@ -41,7 +41,8 @@ extern ADC_HandleTypeDef hadc3;
 void MX_ADC3_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+uint32_t adc3_get_result(uint32_t ch);
+uint32_t adc3_get_result_average(uint32_t ch, uint8_t times);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -46,3 +46,4 @@ remotemonitoringsystem\main.o: ../Core/Inc/bsp/delay\bsp_delay.h
 remotemonitoringsystem\main.o: ../Core/Inc/bsp/lcd\lcd.h
 remotemonitoringsystem\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 remotemonitoringsystem\main.o: ../Core/Inc/bsp/dht11\bsp_dht11.h
+remotemonitoringsystem\main.o: ../Core/Inc/bsp/lsens\bsp_lsens.h
