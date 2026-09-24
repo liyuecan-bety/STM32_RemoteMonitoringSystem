@@ -1,0 +1,16 @@
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+remotemonitoringsystem\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+remotemonitoringsystem\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+remotemonitoringsystem\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+remotemonitoringsystem\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+remotemonitoringsystem\tasks.o: ../Core/Inc/FreeRTOSConfig.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+remotemonitoringsystem\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stack_macros.h

@@ -1,0 +1,12 @@
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
+remotemonitoringsystem\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+remotemonitoringsystem\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+remotemonitoringsystem\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+remotemonitoringsystem\list.o: ../Core/Inc/FreeRTOSConfig.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+remotemonitoringsystem\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

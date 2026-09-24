@@ -1,0 +1,14 @@
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+remotemonitoringsystem\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+remotemonitoringsystem\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+remotemonitoringsystem\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+remotemonitoringsystem\stream_buffer.o: ../Core/Inc/FreeRTOSConfig.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+remotemonitoringsystem\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stream_buffer.h

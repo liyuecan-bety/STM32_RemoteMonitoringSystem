@@ -1,0 +1,14 @@
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+remotemonitoringsystem\croutine.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+remotemonitoringsystem\croutine.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+remotemonitoringsystem\croutine.o: ../Core/Inc/FreeRTOSConfig.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/croutine.h
+remotemonitoringsystem\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
