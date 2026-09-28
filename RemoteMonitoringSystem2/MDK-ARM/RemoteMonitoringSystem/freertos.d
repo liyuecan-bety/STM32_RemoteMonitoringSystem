@@ -53,3 +53,5 @@ remotemonitoringsystem\freertos.o: ../Core/Inc/bsp/dht11\bsp_dht11.h
 remotemonitoringsystem\freertos.o: ../Core/Inc/bsp/lsens\bsp_lsens.h
 remotemonitoringsystem\freertos.o: ../Core/Inc/bsp/LedKey\bsp_led_key.h
 remotemonitoringsystem\freertos.o: ../Core/Inc/bsp/delay\bsp_delay.h
+remotemonitoringsystem\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+remotemonitoringsystem\freertos.o: ../Core/Inc/usart.h

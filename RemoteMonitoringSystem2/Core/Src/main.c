@@ -103,6 +103,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_FSMC_Init();
   MX_ADC3_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	lcd_init();	/* uses HAL_Delay (TIM7) - works before scheduler */
 	delay_init();	/* compute fac_us for delay_us, used only inside tasks */

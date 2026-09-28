@@ -30,6 +30,8 @@
 #include "lsens\bsp_lsens.h"
 #include "LedKey\bsp_led_key.h"
 #include "delay\bsp_delay.h"
+#include <stdio.h>
+#include "usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,7 +92,15 @@ const osThreadAttr_t keyTask_attributes = {
 	.stack_size = 128 * 4,
 	.priority = (osPriority_t) osPriorityNormal,
 };
+osThreadId_t uartTxTaskHandle;
+const osThreadAttr_t uartTxTask_attributes = {
+  .name = "uartTxTask",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* USER CODE END Variables */
+
+
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -99,7 +109,9 @@ void StartDHT11Task(void *argument);
 void StartLcdTask(void *argument);
 void StartLedTask(void *argument);
 void StartKeyTask(void *argument);
+void StartUartTxTask(void *argument);
 /* USER CODE END FunctionPrototypes */
+
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -131,12 +143,14 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
+
   /* USER CODE BEGIN RTOS_THREADS */
   lightTaskHandle = osThreadNew(StartLightTask, NULL, &lightTask_attributes);
   dht11TaskHandle = osThreadNew(StartDHT11Task, NULL, &dht11Task_attributes);
   lcdTaskHandle   = osThreadNew(StartLcdTask,   NULL, &lcdTask_attributes);
   ledTaskHandle   = osThreadNew(StartLedTask,   NULL, &ledTask_attributes);
 	keyTaskHandle		= osThreadNew(StartKeyTask,		NULL,	&keyTask_attributes);
+	uartTxTaskHandle = osThreadNew(StartUartTxTask,NULL,&uartTxTask_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -258,6 +272,7 @@ void StartLedTask(void *argument)
 	}
 }
 
+//KEY Task
 void StartKeyTask(void *argument)
 {
 	uint8_t last = 1;
@@ -270,4 +285,27 @@ void StartKeyTask(void *argument)
 			osDelay(10);
 		}
 }
+
+//uartTx Task
+void StartUartTxTask(void *argument)
+{
+	char buf[64];
+	monitor_data_t d;
+	int n;
+	
+	for(;;)
+	{
+		osMutexAcquire(g_monitor_mutex,osWaitForever);
+		d = g_monitor;
+		osMutexRelease(g_monitor_mutex);
+		
+		n = snprintf(buf,sizeof(buf),"T=%d,H=%d,L=%d,S=%d\r\n"
+			,d.temperature,d.humidity,d.light,d.dht11_ok);
+		HAL_UART_Transmit(&huart2,(uint8_t*)buf,(uint16_t)n,100);
+		osDelay(1000);
+		
+	}
+
+}
 /* USER CODE END Application */
+
